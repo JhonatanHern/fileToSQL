@@ -34,7 +34,7 @@ fs.readdir(path,(err,years)=>{
                                 try {
                                     let data = JSON.parse(fs.readFileSync(`${path}/${year}/${month}/${day}/${time}`,'utf8'))
                                     let dayPrice = data['USD']['transferencia']
-                                    if (dayPrice !== lastPrice) {
+                                    if (Number(dayPrice) !== Number(lastPrice)) {
                                         console.log(`INSERT INTO dolartoday (rate,registered_at) VALUES (${dayPrice}, '${year}-${month}-${day} ${filenameToTime(time)}')`)
                                         lastPrice = dayPrice
                                     }

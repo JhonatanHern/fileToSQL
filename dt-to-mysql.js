@@ -1,3 +1,5 @@
+const fs = require('fs')
+
 const path = '/home/wyp/apps/rates-runner/data/dolartoday/'
 
 const dotFilter = arr => arr.filter( str => str[0] !== '.' )
@@ -27,11 +29,15 @@ fs.readdir(path,(err,years)=>{
                     days.forEach(day=>{
                         try{
                             let prices = dotFilter(fs.readdirSync(`${path}/${year}/${month}/${day}`))
+                            let lastPrice = -1
                             prices.forEach(time=>{
                                 try {
                                     let data = JSON.parse(fs.readFileSync(`${path}/${year}/${month}/${day}/${time}`,'utf8'))
                                     let dayPrice = data['USD']['transferencia']
-                                    console.log(`INSERT INTO dolartoday (rate,registered_at) VALUES (${dayPrice}, '${year}-${month}-${day} ${filenameToTime(time)}')`)
+                                    if (dayPrice !== lastPrice) {
+                                        console.log(`INSERT INTO dolartoday (rate,registered_at) VALUES (${dayPrice}, '${year}-${month}-${day} ${filenameToTime(time)}')`)
+                                        lastPrice = dayPrice
+                                    }
                                 } catch (e) {
                                     console.log('DATA ERROR')
                                     Console.LOG(e)

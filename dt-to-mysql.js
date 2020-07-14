@@ -13,6 +13,8 @@ const filenameToTime = name => {
     return `${data[1]}:${data[2]}:00`
 }
 
+const stringDetail = str => console.log(`details: ${str.length} ${Number(str)}`)
+
 fs.readdir(path,(err,years)=>{
     if (err) {
         console.log('error reading first folder')
@@ -20,17 +22,17 @@ fs.readdir(path,(err,years)=>{
         return
     }
     let res = []
-    dotFilter(years).forEach(year=>{
+    let lastPrice = -1
+    dotFilter(years).forEach(year => {
         try{
             let months = dotFilter(fs.readdirSync(`${path}/${year}`))
-            months.forEach(month=>{
+            months.forEach(month => {
                 try{
                     let days = dotFilter(fs.readdirSync(`${path}/${year}/${month}`))
-                    days.forEach(day=>{
+                    days.forEach(day => {
                         try{
                             let prices = dotFilter(fs.readdirSync(`${path}/${year}/${month}/${day}`))
-                            let lastPrice = -1
-                            prices.forEach(time=>{
+                            prices.forEach(time => {
                                 try {
                                     let data = JSON.parse(fs.readFileSync(`${path}/${year}/${month}/${day}/${time}`,'utf8'))
                                     let dayPrice = data['USD']['transferencia']

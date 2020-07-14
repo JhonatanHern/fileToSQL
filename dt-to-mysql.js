@@ -40,6 +40,7 @@ fs.readdir(path,(err,years)=>{
                                     }
                                 } catch (e) {
                                     console.log('DATA ERROR')
+                                    console.log(`${year}/${month}/${day} ${time}`)
                                     console.log(e)
                                 }
                             })

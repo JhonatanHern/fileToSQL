@@ -13,8 +13,6 @@ const filenameToTime = name => {
     return `${data[1]}:${data[2]}:00`
 }
 
-const stringDetail = str => console.log(`details: ${str.length} ${Number(str)}`)
-
 fs.readdir(path,(err,years)=>{
     if (err) {
         console.log('error reading first folder')
@@ -42,7 +40,7 @@ fs.readdir(path,(err,years)=>{
                                     }
                                 } catch (e) {
                                     console.log('DATA ERROR')
-                                    Console.LOG(e)
+                                    console.log(e)
                                 }
                             })
                         }catch(e){
